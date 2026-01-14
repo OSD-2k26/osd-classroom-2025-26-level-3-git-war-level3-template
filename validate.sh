@@ -1,8 +1,11 @@
 #!/bin/bash
 set -e
 
-# Get all branch names
-BRANCHES=$(git branch --format='%(refname:short)')
+# Fetch all branches (CRITICAL for GitHub Actions)
+git fetch --all --quiet
+
+# Get all REMOTE branch names
+BRANCHES=$(git branch -r --format='%(refname:short)')
 
 # Find path and truth branches (case-insensitive)
 PATH_BRANCH=$(echo "$BRANCHES" | grep -i 'path' | head -n 1 || true)
